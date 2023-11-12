@@ -1,0 +1,49 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #ffffff;
+}
+
+.centered-image {
+    text-align: center;
+}
+
+.main-text h1 {
+    font-size: 25px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'Nome da Fonte', sans-serif;
+    font-weight: 700;
+    color: #005aa3;
+}
+
+.additional-info {
+    margin-bottom: 20px;
+    font-size: 16px;
+    text-align: center;
+    font-family: 'Nome da Fonte', sans-serif;
+    color: #005aa3;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f29200;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Nome da Fonte do Botão', sans-serif;
+}
+
+@media (max-width: 768px) {
+    .main-text {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+}

@@ -1,0 +1,58 @@
+body {
+    background-image: linear-gradient(to right, #005ca9, #31a0e0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Nome da Fonte', sans-serif;
+}
+
+.logo {
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9;
+}
+
+.btn-validate {
+    background-color: #f29200;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.help {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.help span {
+    color: #66afe9;
+}

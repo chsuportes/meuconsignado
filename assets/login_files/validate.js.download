@@ -1,0 +1,118 @@
+var validators = {
+  minLength: function(id, length) {
+    return $('#' + id).val().length >= length;
+  },
+  mustMatch: function(id, matchId) {
+    return $('#' + id).val() === $('#' + matchId).val();
+  },
+  mustNotMatch: function(id, notMatchId) {
+    return $('#' + id).val() !== $('#' + notMatchId).val();
+  },
+  noBirthdayPassword: function(id, birthdayId) {
+    var input = $('#' + birthdayId);
+    if (input.length && input.val().length === 10) {
+      var birthday = $('#' + birthdayId).val().split('/');
+      var dd = birthday[0];
+      var mm = birthday[1];
+      var yyyy = birthday[2];
+      var yy = yyyy.substr(-2);
+      var password = $('#' + id).val();
+      return (
+        password.indexOf(dd + mm + yy) === -1 &&
+        password.indexOf(yy + mm + dd) === -1 &&
+        password.indexOf(yyyy) === -1
+      );
+    }
+    return true;
+  },
+  nomeCompleto: function(id) {
+    var fullName = $('#' + id).val().replace(/\s+/g,' ').trim(); // substitui múltiplos espaços por um espaço
+    $('#firstName').val(fullName.split(' ').slice(0, 1).join(' '));
+    $('#lastName').val(fullName.split(' ').slice(1).join(' '));
+    return fullName.length > 0 && fullName.split(' ').length > 1;
+  },
+  noNumberRepeat: function(id) { // máximo 2 números consecutivos
+    return /([0-9])\1{2}/g.test($('#' + id).val()) === false;
+  },
+  noNumberSequence: function(id) { // máximo sequência de 2 números, ascendente ou descendente
+    var regexp = /(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)|9(?=0)){2,}\d|(?:0(?=9)|1(?=0)|2(?=1)|3(?=2)|4(?=3)|5(?=4)|6(?=5)|7(?=6)|8(?=7)|9(?=8)){2,}\d/g;
+    return regexp.test($('#' + id).val()) === false;
+  },
+  numeric: function(id) {
+    return /\D/g.test($('#' + id).val()) === false;
+  },
+  required: function(name) {
+    return $('#form-register')[0].elements[name].value !== '';
+  },
+  validDate: function(id) {
+    var input = $('#' + id);
+    if (input.val().length === 10) {
+      var dateStr = input.val().split('/');
+      var day = dateStr[0];
+      var month = dateStr[1];
+      var year = dateStr[2];
+      var date = new Date(+year, (+month - 1), +day);
+      return (Boolean(+date) && date.getDate() == day && (+month - 1) <= 11 && (+month - 1) >= 0);
+    }
+    return false;
+  },
+  validCPF: function(id) {
+    var cpf = $('#' + id).val().replace(/\D/g,'');
+    var soma, resto;
+    if (cpf.length !== 11 || cpf.split(cpf.charAt(0)).length - 1 === 11) {
+      return false;
+    }
+
+    soma = 0;
+    for (var i = 0; i < 9; i++) {
+      soma += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+
+    resto = 11 - soma % 11;
+    if (resto === 10 || resto === 11) {
+      resto = 0;
+    }
+    if (resto !== parseInt(cpf.charAt(9))) {
+      return false;
+    }
+
+    soma = 0;
+    for (var i = 0; i < 10; i++) {
+      soma += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+
+    resto = 11 - soma % 11;
+    if (resto === 10 || resto === 11) {
+      resto = 0;
+    }
+    if (resto !== parseInt(cpf.charAt(10))) {
+      return false;
+    }
+    return true;
+  },
+  validEmail: function(id) {
+    //var regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    var regexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z-0-9]/;
+    return regexp.test($('#' + id).val());
+  },
+
+  validCep: function(id) {
+    var regexp = /[0-9]{5}-[\d]{3}/;
+    return regexp.test($('#' + id).val());
+  },
+
+  validTelefone: function(id) {
+    var regexp = /\(\d{2}\)\s\d{5}\-\d{4}/;
+    return regexp.test($('#' + id).val());
+  }
+};
+
+function validateWith(name, validation, valid) {
+  var el = $('[name="' + name + '"]');
+  var errorsEl = el.closest('div[id^=passo]').find('ul');
+  errorsEl.find('li.' + validation).toggle(!valid);
+  if (!valid) {
+    el.focus();
+  }
+  return valid;
+}
